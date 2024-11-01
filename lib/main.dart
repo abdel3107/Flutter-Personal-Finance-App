@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:ongere/core/di/injector.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/Shared/universalVariables.dart';
 import 'core/router/app_router.dart';
+import 'features/Onboarding/OnboardingService.dart';
 
-void main() {
+Future<void> main() async {
   setupInjector();
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
+  isOnboardingDone = isOnboardingCompleted;
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -16,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
