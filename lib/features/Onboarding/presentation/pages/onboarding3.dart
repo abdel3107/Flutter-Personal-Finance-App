@@ -61,7 +61,7 @@ class Onboarding3 extends StatelessWidget {
               text: "Get Started",
               onPressed: () async {
                 await OnboardingService.setOnboardingCompleted();
-                context.go("/login");
+                context.go("/phoneNumber");
               },
               color: Color(0xFF3A86FF)
           )
