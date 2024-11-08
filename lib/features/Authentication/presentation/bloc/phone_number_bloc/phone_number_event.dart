@@ -3,9 +3,9 @@ part of 'phone_number_bloc.dart';
 @immutable
 sealed class PhoneNumberEvent {}
 
-class PhoneNumberSubmission extends PhoneNumberEvent {
+class PhoneNumberSubmissionEvent extends PhoneNumberEvent {
   final String phoneNumber;
 
-  PhoneNumberSubmission(this.phoneNumber);
+  PhoneNumberSubmissionEvent(this.phoneNumber);
 
 }

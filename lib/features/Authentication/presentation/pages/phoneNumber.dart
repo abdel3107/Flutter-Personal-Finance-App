@@ -182,25 +182,39 @@ class _PhoneNumberVerifState extends State<PhoneNumberVerif> {
                           ),
                           child: Align(
                             alignment: Alignment.bottomCenter,
-                            child: ButtonBottombar(
+                            child: BlocListener<PhoneNumberBloc, PhoneState>(
+                              listener: (context, state) {
+                                if (state is PhoneSubmissionSucsessState) {
+                                  context.push("/otpPhone");
+                                } else if (state is PhoneSubmissionFailureState) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text("Failure to submit number"),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              },
+                              child: ButtonBottombar(
                                 text: "Send",
                                 onPressed: (){
                                 if (formKey.currentState?.validate() ?? false) {
                                 formKey.currentState?.save();
-                                  print(number.phoneNumber);
+
                                   final phoneNumber = number.phoneNumber!;
+
                                   context.read<PhoneNumberBloc>().add(
-                                      PhoneNumberSubmission(phoneNumber)
+                                      PhoneNumberSubmissionEvent(phoneNumber)
                                   );
-                                  context.push("/otpPhone");
+
                                 } else {
-                                  SnackBar(
-                                      content: Text("Please input correct number")
-                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Please input correct number")),);
                                   }
                                 },
                                 color: Color(0xFF3A86FF)
                             ),
+),
                           )
                       );
                     }
@@ -212,14 +226,7 @@ class _PhoneNumberVerifState extends State<PhoneNumberVerif> {
     );
   }
 
-  void getPhoneNumber(String phoneNumber) async {
-    PhoneNumber number =
-    await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'CMR');
 
-    setState(() {
-      this.number = number;
-    });
-  }
 
   @override
   void dispose() {

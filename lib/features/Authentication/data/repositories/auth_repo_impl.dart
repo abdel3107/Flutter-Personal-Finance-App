@@ -4,6 +4,7 @@ import 'package:ongere/features/Authentication/data/data_sources/auth_api_servic
 import 'package:ongere/features/Authentication/domain/repositories/auth_repo.dart';
 
 import '../../../../core/di/injector.dart';
+import '../models/otpConfirmRequestParams.dart';
 import '../models/signup_request_params.dart';
 
 class AuthRepositoryImplementation extends AuthRepository {
@@ -15,6 +16,11 @@ class AuthRepositoryImplementation extends AuthRepository {
   @override
   Future<Either> submitPhone(String phone) async {
     return s1<AuthApiService>().submitPhone(phone);
+  }
+
+  @override
+  Future<Either> confirmOtp(OtpRequestParams params) {
+    return s1<AuthApiService>().confirmOtp(params);
   }
 
 }

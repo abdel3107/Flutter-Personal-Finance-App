@@ -4,11 +4,14 @@ import 'package:ongere/core/constants/api_urls.dart';
 import 'package:ongere/core/di/injector.dart';
 import 'package:ongere/core/network/dio_client.dart';
 
+import '../models/otpConfirmRequestParams.dart';
 import '../models/signup_request_params.dart';
 
 abstract class AuthApiService {
 
   Future<Either> submitPhone(String phone);
+  
+  Future<Either> confirmOtp(OtpRequestParams params);
 
   Future<Either> signup(SignupRequestParams signupRequestParams);
 
@@ -39,12 +42,28 @@ class AuthApiServiceImplementation extends AuthApiService {
         ApiUrls.getOTP,
         queryParameters: {
           "phoneNumber": phone
-        }
+        },
       );
       return Right(response);
     }
     on DioException catch(e) {
       return Left(e.response!.data["message"]);
+    }
+  }
+
+  @override
+  Future<Either> confirmOtp(OtpRequestParams params) async {
+    try {
+      var response = await s1<DioClient>().get(
+        ApiUrls.confirmOTP,
+        queryParameters: {
+          "phoneNumber": params.phoneNumber,
+          "code": params.code
+        },
+      );
+      return Right(response);
+    } on DioException catch(e) {
+      return Left(e.response!.data['message']);
     }
   }
 

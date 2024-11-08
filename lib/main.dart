@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ongere/core/di/injector.dart';
+import 'package:ongere/features/Authentication/presentation/bloc/confirmOtp/confirm_otp_bloc.dart';
 import 'package:ongere/features/Authentication/presentation/bloc/phone_number_bloc/phone_number_bloc.dart';
+import 'package:ongere/features/Authentication/presentation/bloc/resendOTPbloc/resend_otp_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/Shared/universalVariables.dart';
@@ -17,6 +19,8 @@ Future<void> main() async {
       MultiBlocProvider(
         providers: [
           BlocProvider<PhoneNumberBloc>(create: (context) => PhoneNumberBloc()),
+          BlocProvider<ResendOtpBloc>(create: (context) => ResendOtpBloc()),
+          BlocProvider<ConfirmOtpBloc>(create: (context) => ConfirmOtpBloc()),
         ],
         child: MyApp(),
       )
