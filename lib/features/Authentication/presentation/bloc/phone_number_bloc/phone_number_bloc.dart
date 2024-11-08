@@ -12,6 +12,7 @@ class PhoneNumberBloc extends Bloc<PhoneNumberEvent, PhoneState> {
   PhoneNumberBloc() : super(PhoneNumberInitial()) {
 
     on<PhoneNumberSubmissionEvent>((event, emit) async {
+      emit(PhoneSubmissionWaiting());
       if (event.phoneNumber.isNotEmpty) {
         String phoneNumberWithoutIndic = event.phoneNumber.substring(1);
         try {

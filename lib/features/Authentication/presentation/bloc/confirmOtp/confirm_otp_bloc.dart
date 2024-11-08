@@ -15,6 +15,7 @@ class ConfirmOtpBloc extends Bloc<ConfirmOtpEvent, ConfirmOtpState> {
     });
 
     on<SendConfirmOtpEvent>((event, emit) async {
+      emit(ConfirmOtpWaiting());
       OtpRequestParams params = OtpRequestParams(
         phoneNumber: event.phoneNumber,
         code: event.code,

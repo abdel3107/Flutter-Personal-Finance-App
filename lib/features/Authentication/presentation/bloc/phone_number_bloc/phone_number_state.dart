@@ -5,6 +5,8 @@ sealed class PhoneState {}
 
 final class PhoneNumberInitial extends PhoneState {}
 
+final class PhoneSubmissionWaiting extends PhoneState {}
+
 final class PhoneSubmissionSucsessState extends PhoneState {
   final String phoneNumber;
 

@@ -159,7 +159,7 @@ class _OtpPhoneState extends State<OtpPhone> {
                         ],
                       ),
 
-                      BlocListener<ConfirmOtpBloc, ConfirmOtpState>(
+                      BlocConsumer<ConfirmOtpBloc, ConfirmOtpState>(
                           listener: (context, otpState) {
                             if(otpState is ConfirmOtpSuccess) {
                               context.go("/password");
@@ -172,33 +172,51 @@ class _OtpPhoneState extends State<OtpPhone> {
                               );
                             }
                           },
-                          child: ValueListenableBuilder<bool>(
-                          valueListenable: _isKeyboardOpen,
-                          builder: (context, isKeyboardOpen, child){
-                            return AnimatedPadding(
-                                duration: Duration(milliseconds: 300),
-                                padding: EdgeInsets.only(
-                                  bottom: isKeyboardOpen ? MediaQuery.of(context).viewInsets.bottom : 20,
-                                ),
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: ButtonBottombar(
-                                      text: "Send",
-                                      onPressed: (){
-                                        _focusNode.unfocus();
-                                        formKey.currentState!.validate();
-                                        context.read<ConfirmOtpBloc>().add(
-                                            SendConfirmOtpEvent(
-                                              phoneNumber: state.phoneNumber,
-                                              code: pinController.text.toString(),
-                                            ),);
-                                      },
-                                      color: Color(0xFF3A86FF)
+                          builder: (BuildContext context, ConfirmOtpState otpState) {
+                            if (otpState is ConfirmOtpWaiting) {
+                              return ElevatedButton(
+                                  onPressed: null,
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFF3A86FF),
+                                      fixedSize: Size(MediaQuery.of(context).size.width * 0.8, 50),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8)
+                                      )
                                   ),
-                                )
+                                  child: CircularProgressIndicator(
+                                    color: Color(0xFFFAFAFA),
+                                  )
+                              );
+                            }
+                            return ValueListenableBuilder<bool>(
+                                valueListenable: _isKeyboardOpen,
+                                builder: (context, isKeyboardOpen, child){
+                                  return AnimatedPadding(
+                                      duration: Duration(milliseconds: 300),
+                                      padding: EdgeInsets.only(
+                                        bottom: isKeyboardOpen ? MediaQuery.of(context).viewInsets.bottom : 20,
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: ButtonBottombar(
+                                            text: "Send",
+                                            onPressed: (){
+                                              _focusNode.unfocus();
+                                              formKey.currentState!.validate();
+                                              context.read<ConfirmOtpBloc>().add(
+                                                SendConfirmOtpEvent(
+                                                  phoneNumber: state.phoneNumber,
+                                                  code: pinController.text.toString(),
+                                                ),);
+                                            },
+                                            color: Color(0xFF3A86FF)
+                                        ),
+                                      )
+                                  );
+                                }
                             );
-                          }
-                      ),
+                          },
+
                       )
                     ],
                   ),

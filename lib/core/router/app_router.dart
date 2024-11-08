@@ -4,6 +4,7 @@ import 'package:ongere/features/Authentication/presentation/pages/login.dart';
 import 'package:ongere/features/Authentication/presentation/pages/otp.dart';
 import 'package:ongere/features/Authentication/presentation/pages/password.dart';
 import 'package:ongere/features/Authentication/presentation/pages/phoneNumber.dart';
+import 'package:ongere/features/Authentication/presentation/pages/useerInfo.dart';
 import 'package:ongere/features/Onboarding/presentation/pages/onboarding1.dart';
 import 'package:ongere/features/Onboarding/presentation/pages/onboarding2.dart';
 import 'package:ongere/features/Onboarding/presentation/pages/onboarding3.dart';
@@ -36,6 +37,9 @@ routes: [
       ),GoRoute(
           path: "/password",
           builder: (context, state) => Password()
+      ),GoRoute(
+          path: "/createUserInfo",
+          builder: (context, state) => UserInfo()
       ),
 
     ]

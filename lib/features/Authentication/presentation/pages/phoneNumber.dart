@@ -182,7 +182,7 @@ class _PhoneNumberVerifState extends State<PhoneNumberVerif> {
                           ),
                           child: Align(
                             alignment: Alignment.bottomCenter,
-                            child: BlocListener<PhoneNumberBloc, PhoneState>(
+                            child: BlocConsumer<PhoneNumberBloc, PhoneState>(
                               listener: (context, state) {
                                 if (state is PhoneSubmissionSucsessState) {
                                   context.push("/otpPhone");
@@ -195,26 +195,43 @@ class _PhoneNumberVerifState extends State<PhoneNumberVerif> {
                                   );
                                 }
                               },
-                              child: ButtonBottombar(
-                                text: "Send",
-                                onPressed: (){
-                                if (formKey.currentState?.validate() ?? false) {
-                                formKey.currentState?.save();
-
-                                  final phoneNumber = number.phoneNumber!;
-
-                                  context.read<PhoneNumberBloc>().add(
-                                      PhoneNumberSubmissionEvent(phoneNumber)
+                              builder: (BuildContext context, PhoneState state) {
+                                if (state is PhoneSubmissionWaiting) {
+                                  return ElevatedButton(
+                                      onPressed: null,
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFF3A86FF),
+                                          fixedSize: Size(MediaQuery.of(context).size.width * 0.8, 50),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8)
+                                          )
+                                      ),
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFFAFAFA),
+                                      )
                                   );
+                                }
+                                return ButtonBottombar(
+                                    text: "Send",
+                                    onPressed: (){
+                                      if (formKey.currentState?.validate() ?? false) {
+                                        formKey.currentState?.save();
 
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text("Please input correct number")),);
-                                  }
-                                },
-                                color: Color(0xFF3A86FF)
+                                        final phoneNumber = number.phoneNumber!;
+
+                                        context.read<PhoneNumberBloc>().add(
+                                            PhoneNumberSubmissionEvent(phoneNumber)
+                                        );
+
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text("Please input correct number")),);
+                                      }
+                                    },
+                                    color: Color(0xFF3A86FF)
+                                );
+                              },
                             ),
-),
                           )
                       );
                     }

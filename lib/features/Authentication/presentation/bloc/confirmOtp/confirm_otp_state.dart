@@ -5,6 +5,8 @@ sealed class ConfirmOtpState {}
 
 final class ConfirmOtpInitial extends ConfirmOtpState {}
 
+final class ConfirmOtpWaiting extends ConfirmOtpState {}
+
 final class ConfirmOtpFailure extends ConfirmOtpState {
   final String failureMessage;
 
