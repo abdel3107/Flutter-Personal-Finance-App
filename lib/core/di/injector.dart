@@ -9,6 +9,10 @@ import 'package:ongere/features/Authentication/domain/use_cases/confirmOtp.dart'
 import 'package:ongere/features/Authentication/domain/use_cases/signup.dart';
 import 'package:ongere/features/Authentication/domain/use_cases/submitPhone.dart';
 
+import '../../features/Authentication/data/data_sources/auth_local_service.dart';
+import '../../features/Authentication/domain/use_cases/isLoggedIn.dart';
+import '../../features/Authentication/domain/use_cases/signin.dart';
+
 final GetIt s1 =  GetIt.instance ;
 
 void setupInjector() {
@@ -17,11 +21,17 @@ void setupInjector() {
 
   s1.registerSingleton<AuthApiService>(AuthApiServiceImplementation());
 
+  s1.registerSingleton<AuthLocalService>(AuthLocalServiceImpl());
+
   s1.registerSingleton<AuthRepository>(AuthRepositoryImplementation());
 
   s1.registerSingleton<SignupUseCase>(SignupUseCase());
 
+  s1.registerSingleton<SigninUseCase>(SigninUseCase());
+
   s1.registerSingleton<SubmitPhoneUseCase>(SubmitPhoneUseCase());
 
   s1.registerSingleton<ConfirmOtpUseCase>(ConfirmOtpUseCase());
+
+  s1.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
 }

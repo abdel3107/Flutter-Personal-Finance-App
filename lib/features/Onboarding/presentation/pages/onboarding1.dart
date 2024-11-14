@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:ongere/core/Shared/presentation/widgets/button_bottomBar.dart';
 import 'package:ongere/core/router/app_router.dart';
 
+import '../../OnboardingService.dart';
+
 class Onboarding1 extends StatelessWidget {
   const Onboarding1({super.key});
 
@@ -57,7 +59,9 @@ class Onboarding1 extends StatelessWidget {
 
           ButtonBottombar(
               text: "Next",
-              onPressed: () => context.push("/onboarding2"),
+              onPressed: () {
+                context.push("/onboarding2");
+               },
               color: Color(0xFF3A86FF)
           )
 
