@@ -73,6 +73,8 @@ Also, configure the base url in `lib/core/constants/api_urls.dart`
 flutter run
 ```
 
+---
+
 ## 🚀 Usage
 - **Onboarding**: New users are guided through an onboarding process.
 - **Sign Up / Login**: Register using your phone number and verify via OTP.
